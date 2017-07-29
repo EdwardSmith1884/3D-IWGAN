@@ -1,0 +1,6 @@
+This is the directory for 3D generation. 
+
+Two models are available, the first is my implementation of the 3D-GAN paper, found here: http://3dgan.csail.mit.edu/. The second is my own model, called 3D-IWGAN, released for my paper: . The dataset you can use to train is the modelNet10 dataset which can be downloaded and converted using the Make_Data.sh script. This will not take long. You can train by calling python 32-3D-IWGan.py [-h] [-n NAME] [-d DATA] [-e EPOCHS] [-b BATCHSIZE][-sample SAMPLE] [-save SAVE] [-l] [-le LOAD_EPOCH] [-graph GRAPH]. There is a description for all of these parameters by applying the '-h' parameter, though none are necessary and it will start training without then on the chair class with 12 orientations. 
+To evaluate the output you can use the visualize.py script. To use this just call python visualize.py VOXEL_FILE, where voxel file is the file created during training and saved to savepoint/NAME/EPOCH.npy. For the 3D-IWGAN model, graphs will also be created which allow you to track the discriminator's loss, which will at fist raise rapidly but then begin to decrease, and this decreasing loss can be used to track convergence. To train on all of the training classes call 32-3D-IWGan.py -d 'data/train/*'. 
+Let me know if you have any issues at edward.smith@mail.mcgill.ca
+
