@@ -105,7 +105,6 @@ def binvox(): # converts .obj files to .binvox files, intermidiate step before c
 		dirs = glob('data/objects/' + labels[s]+'/*.obj')
 		commands =[]
 		count = 0 
-		print dirs 
 		for d in tqdm(dirs):
 			command = './binvox -d 100 -pb ' + d # this executable can be found at http://www.patrickmin.com/binvox/ ,  -d 100 idicates resoltuion will be 100 by 100 by 100 , -pb is to stop the visualization
 			commands.append(command)
@@ -116,7 +115,6 @@ def binvox(): # converts .obj files to .binvox files, intermidiate step before c
 				pool.join()
 				commands = []
 			count +=1 
-		print commands
 		pool = Pool()
 		pool.map(call, commands)
 		pool.close()
