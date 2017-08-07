@@ -89,8 +89,19 @@ def download():
 				current_class = line.split(',')
 				obj_urls.append(['http://shapenet.cs.stanford.edu/shapenet/obj-zip/ShapeNetCore.v1/02818832/'+current_class[0][4:]+'/model.obj', 'data/objects/bed/'+ current_class[0][4:]+'.obj'])
 	random.shuffle(obj_urls)
+	final_urls = []
+	dictionary = {}
+	for o in obj_urls:
+		obj_class = o[1].split('/')[-2]
+		if obj_class in dictionary: 
+			dictionary[obj_class] += 1
+			if dictionary[obj_class]> args.num_objects: 
+				continue
+		else: 
+			dictionary[obj_class] = 1
+		final_urls.append(o)  
 	pool = Pool()
-	pool.map(down, obj_urls[:args.num_objects])
+	pool.map(down, final_urls)
 
 # these are two simple fucntions for parallel processing, down downloads in parallel, and call calls functions in parallel
 # there work in conjuntion with pool.map()
