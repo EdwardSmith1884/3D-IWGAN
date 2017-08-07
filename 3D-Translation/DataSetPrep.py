@@ -2,7 +2,7 @@ import os
 import urllib
 from multiprocessing import Pool
 from progress.bar import Bar
-# import scripts.binvox_rw
+import scripts.binvox_rw
 from scripts.global_variables import *
 import numpy as np 
 from tqdm import tqdm
