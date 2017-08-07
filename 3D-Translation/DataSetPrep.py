@@ -19,7 +19,7 @@ import argparse
 # this is the dataset for object translation, it will download the object files, convert then into numpy matricies, and overlay them onto pictures from the sun dataset 
 
 parser = argparse.ArgumentParser(description='Dataset prep for image to 3D object translation, downloads and creates objects and image overlays.')
-parser.add_argument('-o','--objects', default=['chair'], help='List of object classes to be used downloaded and converted.', type = list )
+parser.add_argument('-o','--objects', default=['chair'], help='List of object classes to be used downloaded and converted.', nargs='+' )
 parser.add_argument('-no','--num_objects', default=1500, help='number of objects to be converted', type = int)
 parser.add_argument('-ni','--num_images', default=15, help='number of images to be created for each object', type = int)
 parser.add_argument('-b','--backgrounds', default='sun/', help='location of the background images')
