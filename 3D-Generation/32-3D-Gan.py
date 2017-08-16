@@ -106,7 +106,7 @@ for epoch in range(start, args.epochs):
         if Train_Dis: 
             errD,_,ones = sess.run([d_loss, d_optim, D_legit] ,feed_dict={real_models: models}) 
         else: 
-            ones = sess.run([d_loss] ,feed_dict={real_models: models}) 
+            ones = sess.run([D_legit] ,feed_dict={real_models: models}) 
         errG,_,zeros,objects = sess.run([g_loss, g_optim, D_fake, G_train], feed_dict={})    
         Train_Dis = (cal_acc(zeros,ones)<0.95)# only train discriminator at certain level of accuracy 
        
