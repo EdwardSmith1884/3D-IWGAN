@@ -59,7 +59,7 @@ with tf.variable_scope("all"):
         inter.append(difference[i] *alpha[i])
     inter = tf.stack(inter)
     interpolates        = real_models + inter
-    gradients           = tf.gradients(discriminator(interpolates, output_size, batch_size= args.batchsize, improved = True, is_train = False)[1],[interpolates])[0]
+    gradients           = tf.gradients(discriminator(interpolates, output_size, batch_size= args.batchsize, improved = True, is_train = False, reuse= True)[1],[interpolates])[0]
     slopes              = tf.sqrt(tf.reduce_sum(tf.square(gradients),reduction_indices=[1]))
     gradient_penalty    = tf.reduce_mean((slopes-1.)**2.)
         
