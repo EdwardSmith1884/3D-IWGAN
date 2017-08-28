@@ -1,6 +1,14 @@
 # 3D Reconstruction
 This is the directory for recovering 3D object shape from single perspective depth scans using my 3D-VAE-IWGAN method described in: https://arxiv.org/abs/1707.09557 .
 
+![Recovered](../imgs/Kinect_reconstruction2.png?raw=true "Title")
+Example reconstruction results using the 3D-VAE-IWGAN model, from a distribution consisting of the chair class from ModelNet10 dataset. The top row shows example voxelized depth maps from the test set, and the bottom shows their corresponding recovered 3D objects. 
+
+![RealRecovered](../imgs/Kinect_Real_Reconstructions2.png?raw=true "Title")
+Example reconstruction results using the 3D-VAE-IWGAN model, trained on synthetic depth maps, and evaluated on real kinect scans.
+
+
+
 **Dataset**:
 * This system is set up to only run on recovering chairs.
 * To set up the dataset call ./3D_generation.sh .
