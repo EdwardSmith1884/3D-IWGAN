@@ -6,5 +6,19 @@ conditioned on image inputs. The third, held in the folder 3D-reconstruction, is
 3D objects, from single perspective depth scans. 
 
 
+
+![Diagram](imgs/Diagram4.png?raw=true "Title")
+A diagram outlining the 3 Generative Adverserial Networks used in this repo. 
+
+# Example 3D Generation 
+
+
+![AllClasses](imgs/IWGAN_all_classes2.png?raw=true "Title")
+Example 3D objects generated from a distribution constisting of 10 Shapenet classes in 12 orientations, rotated for easy viewing. 
+
+
+![Comparison](imgs/Comparison3.png?raw=true "Title")
+Comparison of 3D-IWGAN's generation ability compared to that of 3D-GAN's
+
 # Reference:
 https://arxiv.org/abs/1707.09557
