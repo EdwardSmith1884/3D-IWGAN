@@ -17,7 +17,7 @@ A diagram outlining the 3 Generative Adverserial Networks used in this repo.
 Example 3D objects generated from a distribution constisting of 10 Shapenet classes in 12 orientations, rotated for easy viewing. 
 
 
-![Comparison](imgs/Comparison3.png?raw=true "Title")
+![Comparison](imgs/Comparison3.png?raw=true "Title") <br />
 Comparison of 3D-IWGAN's generation ability compared to that of 3D-GAN's.
 
 # Reference:
