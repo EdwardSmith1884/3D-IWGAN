@@ -14,7 +14,7 @@ A diagram outlining the 3 Generative Adverserial Networks used in this repo.
 
 
 ![AllClasses](imgs/IWGAN_all_classes2.png?raw=true "Title")
-Example 3D objects generated from a distribution constisting of 10 object classes 3D oclasses in 12 orientations, rotated for easy viewing. 
+Example 3D objects generated from a distribution constisting of 10 3D object classes in 12 orientations, rotated for easy viewing. 
 
 
 ![Comparison](imgs/Comparison3.png?raw=true "Title") <br />
