@@ -18,7 +18,7 @@ Example 3D objects generated from a distribution constisting of 10 Shapenet clas
 
 
 ![Comparison](imgs/Comparison3.png?raw=true "Title")
-Comparison of 3D-IWGAN's generation ability compared to that of 3D-GAN's
+Comparison of 3D-IWGAN's generation ability compared to that of 3D-GAN's.
 
 # Reference:
 https://arxiv.org/abs/1707.09557
