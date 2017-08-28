@@ -24,3 +24,6 @@ The dataset you can use to train is the modelNet10 dataset which can be download
 * Let me know if you have any issues at edward.smith@mail.mcgill.ca, I am happy to help. 
 
 
+![graph](../imgs/graph.png?raw=true "Title") <br />
+An example graph of the discriminator's loss during training. This can be used to tran convergence, as can be observed in this image. 
+
