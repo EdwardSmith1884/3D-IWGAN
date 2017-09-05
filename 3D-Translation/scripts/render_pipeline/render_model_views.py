@@ -20,8 +20,8 @@ author: hao su, charles r. qi, yangyan li
 import os
 import bpy
 
-bpy.context.user_preferences.addons['cycles'].preferences.compute_device_type = 'CUDA'
-bpy.context.user_preferences.addons['cycles'].preferences.devices[0].use = True
+# bpy.context.user_preferences.addons['cycles'].preferences.compute_device_type = 'CUDA'
+# bpy.context.user_preferences.addons['cycles'].preferences.devices[0].use = True
 # bpy.context.scene.cycles.device = 'GPU'
 # bpy.ops.render.render(True)
 import sys
