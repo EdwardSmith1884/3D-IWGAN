@@ -137,7 +137,7 @@ for epoch in range(start, args.epochs):
         
         #training the gen / decoder and the encoder 
         if iter_counter% 5 ==0:
-            errG,_,errV,_,r_loss= sess.run([g_loss, g_optim, v_loss, v_optim, recon_loss], feed_dict={surfaces: batch_surfaces, real_models:models })    
+            errG,_,r_loss= sess.run([g_loss, g_optim, recon_loss], feed_dict={surfaces: batch_surfaces, real_models:models })    
         track_recon_loss.append(r_loss)
         track_recon_loss_iter.append(iter_counter)
        
