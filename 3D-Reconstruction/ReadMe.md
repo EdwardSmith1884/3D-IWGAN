@@ -5,7 +5,7 @@ This is the directory for recovering 3D object shape from single perspective dep
 Example reconstruction results using the 3D-VAE-IWGAN model, from a distribution consisting of the chair class from ModelNet10 dataset. The top row shows example voxelized depth maps from the test set, and the bottom shows their corresponding recovered 3D objects. 
 
 ![Recovered](../imgs/comparisonFull.png?raw=true "Title")
-Example reconstruction results using the 3D-VAE-IWGAN model, from a distribution consisting of 10 disinct object classes. The top row shows example voxelized depth maps from the test set, and the bottom shows their corresponding recovered 3D objects. 
+Example reconstruction results using the 3D-VAE-IWGAN model, from a distribution consisting of 10 distinct object classes. The top row shows example voxelized depth maps from the test set, and the bottom shows their corresponding recovered 3D objects. 
 
 ![RealRecovered](../imgs/Kinect_Real_Reconstructions2.png?raw=true "Title")
 Example reconstruction results using the 3D-VAE-IWGAN model, trained on synthetic depth maps, and evaluated on real kinect scans.
