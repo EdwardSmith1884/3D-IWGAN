@@ -1,6 +1,8 @@
 # 3D Translation 
 This is the directory for translating images to 3D models using my method described in: https://arxiv.org/abs/1707.09557.
 
+![Recovered](../imgs/rgbtovoxel.png?raw=true "Title")
+Example reconstruction results using the 3D-VAE-IWGAN model, from a distribution consisting of the chair class from the ShapeNet Core dataset. In the 1st and 4th column are the rgb input, in the 2nd and 5th are my reconstructions, and in the 3rd and 6th are the ground truth objects.
 
 **Dataset** 
 * To set up the dataset call python DataSetPrep.py  [-h] [-o OBJECTS] [-no NUM_OBJECTS] [-ni NUM_IMAGES][-b BACKGROUNDS] [-t TEXTURES]. 
