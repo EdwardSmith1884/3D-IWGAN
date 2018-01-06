@@ -21,4 +21,4 @@ Example 3D objects generated from a distribution constisting of 10 3D object cla
 Comparison of 3D-IWGAN's generation ability compared to that of 3D-GAN's.
 
 # Reference:
-https://arxiv.org/abs/1707.09557
+please cite my paper if you use this repo for research https://arxiv.org/abs/1707.09557
