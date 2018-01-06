@@ -1,12 +1,10 @@
 import tensorflow as tf 
-import keras.backend as K 
 import os
 import sys 
+sys.path.insert(0, '../')
 import tensorlayer as tl
 import numpy as np
-from tensorlayer.layers import *
 import random 
-from glob import glob
 import argparse
 import scripts
 from scripts.GANutils import *
@@ -35,47 +33,43 @@ save_dir =  "savepoint/" + args.name +'/'
 output_size = 32 
 
 
-
- 
-
-
-
 ######### make directories ############################
-with tf.variable_scope("all"):
-    make_directories(checkpoint_dir,save_dir)
 
-    ####### inputs  ###################
-    real_models = tf.placeholder(tf.float32, [args.batchsize, output_size, output_size, output_size] , name='real_models')
-    z           = tf.random_normal((args.batchsize, 200), 0, 1)
-    a = tf.Print(z, [z], message="This is a: ")
-    ########## network computations #######################
+make_directories(checkpoint_dir,save_dir)
 
-    net_g , G_train     = generator_32(z, is_train=True, reuse = False, sig= True, batch_size=args.batchsize)
+####### inputs  ###################
+real_models = tf.placeholder(tf.float32, [args.batchsize, output_size, output_size, output_size] , name='real_models')
+z           = tf.random_normal((args.batchsize, 200), 0, 1)
+a = tf.Print(z, [z], message="This is a: ")
+########## network computations #######################
 
-    if args.mini_batch_discimination: 
-        dis = discriminator_batch_discrimination
-    else: 
-        dis = discriminator
-    net_d , D_fake      = dis(G_train, output_size, batch_size= args.batchsize, sig = True, is_train = True, reuse = False)
-    net_d2, D_legit     = dis(real_models,  output_size, batch_size= args.batchsize, sig = True, is_train= True, reuse = True)
-    net_d2, D_eval      = dis(real_models,  output_size, batch_size= args.batchsize, sig = True, is_train= False, reuse = True) # this is for desciding weather to train the discriminator
+net_g , G_train     = generator_32(z, is_train=True, reuse = False, sig= True, batch_size=args.batchsize)
 
-
-    ########### Loss calculations #########################
-    d_loss = -tf.reduce_mean(tf.log(D_legit) + tf.log(1. - D_fake))
-    g_loss = -tf.reduce_mean(tf.log(D_fake))
+if args.mini_batch_discimination: 
+    dis = discriminator_batch_discrimination
+else: 
+    dis = discriminator
+net_d , D_fake      = dis(G_train, output_size, batch_size= args.batchsize, sig = True, is_train = True, reuse = False)
+net_d2, D_legit     = dis(real_models,  output_size, batch_size= args.batchsize, sig = True, is_train= True, reuse = True)
+net_d2, D_eval      = dis(real_models,  output_size, batch_size= args.batchsize, sig = True, is_train= False, reuse = True) # this is for desciding weather to train the discriminator
 
 
-    ############ Optimization #############
-    g_vars = net_g.all_params   
-    d_vars = net_d.all_params  
+########### Loss calculations #########################
+d_loss = -tf.reduce_mean(tf.log(D_legit) + tf.log(1. - D_fake))
+g_loss = -tf.reduce_mean(tf.log(D_fake))
 
-    if args.mini_batch_discimination: 
-        W_var = [var for var in tf.trainable_variables() if var.name =='w_var:0']
-        d_vars += W_var
 
-    net_g.print_params(False)
-    net_d.print_params(False)
+############ Optimization #############
+g_vars = net_g.all_params   
+d_vars = net_d.all_params  
+
+if args.mini_batch_discimination: 
+    W_var = [var for var in tf.trainable_variables() if var.name =='w_var:0']
+    d_vars += W_var
+
+
+g_vars = tl.layers.get_variables_with_name('gen', True, True)   
+d_vars = tl.layers.get_variables_with_name('dis', True, True)
 
 d_optim = tf.train.AdamOptimizer(args.discriminator_learning_rate, beta1=0.5).minimize(d_loss, var_list=d_vars)
 g_optim = tf.train.AdamOptimizer(args.genorator_learning_rate, beta1=0.5).minimize(g_loss, var_list=g_vars)
