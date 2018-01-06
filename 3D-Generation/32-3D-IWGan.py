@@ -1,10 +1,9 @@
 import tensorflow as tf 
-import keras.backend as K 
 import os
 import sys 
+sys.path.insert(0, '../')
 import tensorlayer as tl
 import numpy as np
-from tensorlayer.layers import *
 import random 
 from glob import glob
 import argparse
@@ -30,50 +29,50 @@ save_dir =  "savepoint/" + args.name +'/'
 output_size = 32 
 
 
-with tf.variable_scope("all"):
-    ######### make directories ################
-    make_directories(checkpoint_dir,save_dir)
+######### make directories ################
+make_directories(checkpoint_dir,save_dir)
 
-    ####### inputs  ###################
-    z = tf.random_normal((args.batchsize, 200), 0, 1)
-    real_models =  tf.placeholder(tf.float32, [args.batchsize, output_size, output_size, output_size] , name='real_models')
-    ########## network computations #######################
-
+####### inputs  ###################
+z = tf.random_normal((args.batchsize, 200), 0, 1)
+real_models =  tf.placeholder(tf.float32, [args.batchsize, output_size, output_size, output_size] , name='real_models')
+########## network computations #######################
 
 
-    #used for training genorator
-    net_g, G_Fake =  generator_32(z, is_train=True, reuse = False, sig= False, batch_size=args.batchsize)
+
+#used for training genorator
+net_g, G_Fake =  generator_32(z, is_train=True, reuse = False, sig= False, batch_size=args.batchsize)
 
 
-    #used for training d on fake
-    net_d, D_Fake  = discriminator(G_Fake, output_size, batch_size= args.batchsize, improved = True ,is_train = True, reuse= False)
-    #used for training d on real
-    net_d2, D_Real = discriminator(real_models, output_size, batch_size= args.batchsize, improved = True ,is_train = True, reuse= True)
+#used for training d on fake
+net_d, D_Fake  = discriminator(G_Fake, output_size, batch_size= args.batchsize, improved = True ,is_train = True, reuse= False)
+#used for training d on real
+net_d2, D_Real = discriminator(real_models, output_size, batch_size= args.batchsize, improved = True ,is_train = True, reuse= True)
 
-    ########### Loss calculations ############
+########### Loss calculations ############
 
-    alpha               = tf.random_uniform(shape=[args.batchsize,1] ,minval =0., maxval=1.) # here we calculate the gradient penalty 
-    difference          = G_Fake - real_models
-    inter               = []
-    for i in range(args.batchsize): 
-        inter.append(difference[i] *alpha[i])
-    inter = tf.stack(inter)
-    interpolates        = real_models + inter
-    gradients           = tf.gradients(discriminator(interpolates, output_size, batch_size= args.batchsize, improved = True, is_train = False, reuse= True)[1],[interpolates])[0]
-    slopes              = tf.sqrt(tf.reduce_sum(tf.square(gradients),reduction_indices=[1]))
-    gradient_penalty    = tf.reduce_mean((slopes-1.)**2.)
-        
-    d_loss = -tf.reduce_mean(D_Real) + tf.reduce_mean(D_Fake) + 10.*gradient_penalty
-    g_loss = -tf.reduce_mean(D_Fake)
+alpha               = tf.random_uniform(shape=[args.batchsize,1] ,minval =0., maxval=1.) # here we calculate the gradient penalty 
+difference          = G_Fake - real_models
+inter               = []
+for i in range(args.batchsize): 
+    inter.append(difference[i] *alpha[i])
+inter = tf.stack(inter)
+interpolates        = real_models + inter
+gradients           = tf.gradients(discriminator(interpolates, output_size, batch_size= args.batchsize, improved = True, is_train = False, reuse= True)[1],[interpolates])[0]
+slopes              = tf.sqrt(tf.reduce_sum(tf.square(gradients),reduction_indices=[1]))
+gradient_penalty    = tf.reduce_mean((slopes-1.)**2.)
+    
+d_loss = -tf.reduce_mean(D_Real) + tf.reduce_mean(D_Fake) + 10.*gradient_penalty
+g_loss = -tf.reduce_mean(D_Fake)
 
-    ############ Optimization #############
-
-    g_vars = net_g.all_params   # only updates the generator
-    d_vars = net_d.all_params   # only updates the discriminator
+############ Optimization #############
 
 
-    net_g.print_params(False)
-    net_d.print_params(False)
+g_vars = tl.layers.get_variables_with_name('gen', True, True)   
+d_vars = tl.layers.get_variables_with_name('dis', True, True)
+
+
+net_g.print_params(False)
+net_d.print_params(False)
 
 d_optim = tf.train.AdamOptimizer( learning_rate = 1e-4, beta1=0.5, beta2=0.9).minimize(d_loss, var_list=d_vars)
 g_optim = tf.train.AdamOptimizer( learning_rate = 1e-4, beta1=0.5, beta2=0.9).minimize(g_loss, var_list=g_vars)

@@ -26,5 +26,5 @@ Example reconstruction results using the 3D-VAE-IWGAN model, from a distribution
 * To create the GAN model call python 20-VAE-3D-IWGAN.py
   * It has parameters which can be discovered using the -h parameters. 
   * It will, by default, train on the chair dataset, which is set up by defualt in the DataSetPrep.py script so as long as everything has been installed properly, and this script is called first everything should train as is. 
-* To evaluate the output you can use the visualize.py script. To use this just call python visualize.py VOXEL_FILE, where voxel file is the file created during training and saved to savepoint/NAME/EPOCH.npy. 
+* To evaluate the output you can use the visualize.py script. This will require you to download Meshlab. To use this just call python visualize.py VOXEL_FILE, where voxel file is the file created during training and saved to savepoint/NAME/EPOCH.npy. 
 * Graphs will be created which allow you to track the discriminator's loss, which will at first raise rapidly but then begin to decrease, and this decreasing loss can be used to track convergence. Let me know if you have any issues at edward.smith@mail.mcgill.ca

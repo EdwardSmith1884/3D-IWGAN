@@ -2,12 +2,13 @@ import os
 import urllib
 from multiprocessing import Pool
 from progress.bar import Bar
+import sys
+sys.path.insert(0, '../')
 import scripts.binvox_rw
 from scripts.global_variables import *
 import numpy as np 
 from tqdm import tqdm
 from glob import glob
-import sys
 from datetime import datetime
 import random 
 import shutil
@@ -20,7 +21,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Dataset prep for image to 3D object translation, downloads and creates objects and image overlays.')
 parser.add_argument('-o','--objects', default=['chair'], help='List of object classes to be used downloaded and converted.', nargs='+' )
-parser.add_argument('-no','--num_objects', default=1500, help='number of objects to be converted', type = int)
+parser.add_argument('-no','--num_objects', default=1000, help='number of objects to be converted', type = int)
 parser.add_argument('-ni','--num_images', default=15, help='number of images to be created for each object', type = int)
 parser.add_argument('-b','--backgrounds', default='sun/', help='location of the background images')
 parser.add_argument('-t','--textures', default='dtd/', help='location of the textures to place onto the objects')
@@ -208,7 +209,7 @@ def render(): # code for rendering the cad models as images
 				# these setting work for me to get things large and varied enough
 				# the size setting is low number for large objects and high numbers for small, be careful, it takes much longer to render larger object, I have it working so that 
 				# I render smaller then desired and then I crop the image to enlarge it 
-				python_cmd = 'python %s -a %s -e %s -t %s -d %s -o %s -m %s -tex %s ' % ('scripts/render_class_view.py', 
+				python_cmd = 'python %s -a %s -e %s -t %s -d %s -o %s -m %s -tex %s ' % ('../scripts/render_class_view.py', 
 					str(v[0]), str(v[1]), str(v[2]), str(v[3]), os.path.join(img_dir,model_name, img_name ), model, random.choice(textures))
 				commands.append(python_cmd)
 

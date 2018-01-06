@@ -23,7 +23,7 @@ Example reconstruction results using the 3D-VAE-IWGAN model, trained on syntheti
 To run the model on this data call Kinect-VAE-3D-IWGAN.py, there are other parameters which can be specified, call with -h to view them. 
 
 **Additional Details**:
-* To evaluate the output you can use the visualize.py script.
+* To evaluate the output you can use the visualize.py script. This will require you to download Meshlab.
   * To use this just call python visualize.py VOXEL_FILE, where voxel file is the file created during training and saved to savepoint/NAME/EPOCH.npy. 
 * Graphs will be created which allow you to track the discriminator's loss
   * The loss will at first raise rapidly but then begin to decrease..

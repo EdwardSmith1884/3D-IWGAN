@@ -1,7 +1,6 @@
 import os
 import tensorlayer as tl
 import numpy as np
-from tensorlayer.layers import *
 import matplotlib.pyplot as plt
 from glob import glob
 from PIL import Image
@@ -23,7 +22,7 @@ def make_inputs_and_images(file_batch, voxel_dir):
     images = []
     for i,fil in enumerate(file_batch): 
         split = fil.split('/')
-        models.append(np.load( voxel_dir+ split[2] +'.binvox.npy'))
+        models.append(np.load( voxel_dir+ split[-1].split('_')[0] +'.npy'))
         img = Image.open(fil)
         images.append(np.asarray(img,dtype='uint8'))
     models = np.array(models)
@@ -41,8 +40,8 @@ def make_inputs_and_surfaces(file_batch, voxel_dir):
     models = []
     surfaces = []
     for fil in file_batch: 
-        name =  fil.split('/')[-1].split('_')[-1]
-        models.append(np.load( voxel_dir+'/chair_'+name ))
+        name = '/' + fil.split('/')[-1].split('_')[-2] + '.npy'
+        models.append(np.load( voxel_dir+ name ))
         surfaces.append(np.load(fil))
     models = np.array(models)
     surfaces = np.array(surfaces)
@@ -78,12 +77,11 @@ def grab_files_images(image_dir, voxel_dir):
     for dir,_,_ in os.walk(image_dir):
         files.extend(glob(os.path.join(dir,pattern))) 
     voxels = [ v.split('/')[-1].split('.')[0] for v in glob(voxel_dir + '*')]
+    
     temp = []
     for f in files: 
-        if 'large_' in f: 
+        if 'orig_' in f: 
             continue 
-        if int(f[:-4].split('/')[-1].split('_')[1])>30: 
-            continue
         if f.split('/')[-2] not in voxels: continue
         temp.append(f)
     files = []
@@ -103,13 +101,11 @@ def grab_files(voxel_dir):
 def grab_files_surfaces(surface_dir, voxel_dir): 
     surface_dir+='/'
     voxel_dir+='/'
-    files = []
-    pattern  = "*.jpg"
     files = glob(surface_dir+'*')
     voxels = [ v.split('/')[-1].split('_')[-1] for v in glob(voxel_dir + '*')]
     temp = []
     for f in files: 
-        if f.split('/')[-1].split('_')[-1] not in voxels: continue
+        if f.split('/')[-1].split('_')[-2] + '.npy' not in voxels: continue
         temp.append(f)
     return temp
 
@@ -240,10 +236,11 @@ def save_values(save_dir,track_d_loss_iter, track_d_loss, track_recon_loss_iter 
 def cal_acc(zeros,ones): 
     accuracy = 0.0
     for example in zeros:
-        if example<0.5: accuracy += 1.0
+
+        if example[0]<0.5: accuracy += 1.0
         
     for example in ones:
-        if example>0.5: accuracy += 1.0 
+        if example[0]>0.5: accuracy += 1.0 
     accuracy = accuracy/(float(len(zeros) + len(ones))) 
     print 'The accuracy of the discriminator is: ' + str(accuracy)
     return accuracy
