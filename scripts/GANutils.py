@@ -55,18 +55,7 @@ def save_voxels(save_dir, models, epock, recon_models = None):
     if recon_models is not None: 
         np.save(save_dir+str(epock) + '_VAE', recon_models) 
       
-def visualize(models, connect = 2, threshold = 0.1, index = 1, downsample_factor = 1, downsample_method = 'max', uniform_size = 0.9, use_colormap = False):   
-    from Vis2 import * 
-    from util import *
-    for voxels in models: 
-        if connect > 0: 
-            voxels_keep = (voxels >= threshold)
-            voxels_keep = max_connected(voxels_keep, connect)
-            voxels[np.logical_not(voxels_keep)] = 0
-        if downsample_factor > 1:
-            print "==> Performing downsample: factor: "+str(downsample_factor)+" method: "+downsample_method,
-            voxels = downsample(voxels, downsample_factor, method=downsample_method)
-        visualization(voxels, threshold, title=str(index), uniform_size=uniform_size, use_colormap=use_colormap)
+
         
 
 def grab_files_images(image_dir, voxel_dir): 
