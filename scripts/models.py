@@ -117,9 +117,7 @@ def discriminator(inputs ,output_size, improved = False, VAE_loss = False, sig =
 		net_5 = tl.layers.DenseLayer(net_5, n_units=output_units, act=tf.identity,
 										W_init = tf.random_normal_initializer(stddev=0.02),
 										name='d/net_5/dense')
-		if VAE_loss:
-			return net_5, net_5.outputs, net_h3.outputs
-		elif sig: 
+		if sig: 
 			return net_5, tf.nn.sigmoid(net_5.outputs)
 		else: 
 			return net_5, net_5.outputs 
