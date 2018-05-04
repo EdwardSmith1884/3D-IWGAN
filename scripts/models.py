@@ -125,40 +125,7 @@ def discriminator(inputs ,output_size, improved = False, VAE_loss = False, sig =
 			return net_5, net_5.outputs 
 
 
-def mini_batch_discrimination(inputs ,output_size, improved = False, VAE_loss = False, sig= False,  is_train=True, reuse=False, batch_size=128, output_units= 1):
-	inputs = tf.reshape(inputs,[batch_size,output_size,output_size,output_size,1])
-	df_dim = output_size # Dimension of discrim filters in first conv layer
-
-	with tf.variable_scope("dis", reuse=reuse) as vs:
-		tl.layers.set_name_reuse(reuse)
-
-		net_0 = tl.layers.InputLayer(inputs, name='d/net_0/in')
-
-		net_1 = Conv3D(net_0, df_dim, '1', f_dim_in = 1 , batch_norm = False ) 
-		net_1.outputs = tl.activation.leaky_relu(net_1.outputs, alpha=0.2, name='d/net_1/lrelu')
-		
-		net_2 = Conv3D(net_1, df_dim*2, '2', batch_norm = improved, is_train = is_train,) 
-		net_2.outputs = tl.activation.leaky_relu(net_2.outputs, alpha=0.2, name='d/net_2/lrelu')
-		
-		net_3 = Conv3D(net_2, df_dim*4, '3', batch_norm = improved, is_train = is_train)  
-		net_3.outputs = tl.activation.leaky_relu(net_3.outputs, alpha=0.2, name='d/net_3/lrelu')
-		
-		net_4 = Conv3D(net_3, df_dim*8, '4', batch_norm = improved, is_train = is_train)   
-		net_4.outputs = tl.activation.leaky_relu(net_4.outputs, alpha=0.2, name='d/net_4/lrelu')
-		
-		net_5 = FlattenLayer(net_4, name='d/net_5/flatten')
-		minibatch_features = MBD(net_5.outputs, output_size)
-		net_5.outputs = K.concatenate([net_5.outputs, minibatch_features], 1)
-		net_5 = tl.layers.DenseLayer(net_5, n_units=output_units, act=tf.identity,
-										W_init = tf.random_normal_initializer(stddev=0.02),
-										name='d/net_5/dense')
-		
-		if VAE_loss:
-			return net_5, net_5.outputs, net_h3.outputs
-		elif sig: 
-			return net_5, tf.nn.sigmoid(net_5.outputs)
-		else: 
-			return net_5, net_5.outputs 
+ 
 
 
 def VAE(images, is_train = True):
