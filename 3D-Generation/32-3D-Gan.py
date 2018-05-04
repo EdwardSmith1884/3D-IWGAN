@@ -22,7 +22,6 @@ parser.add_argument('-sample', default= 5, help='How often generated obejcts are
 parser.add_argument('-save', default= 5, help='How often the network models are saved.', type= int)
 parser.add_argument('-l', '--load', default= False, help='Indicates if a previously loaded model should be loaded.', action = 'store_true')
 parser.add_argument('-le', '--load_epoch', default= '', help='The epoch to number to be loaded from.', type=str)
-parser.add_argument('-mbd', '--mini_batch_discimination', default= False, help= 'Indicates if Mini Bathc Discrimination should be used',  action = 'store_true')
 parser.add_argument('-glr','--genorator_learning_rate', default=0.0025, help ='The genorator learning rate.', type=int)
 parser.add_argument('-dlr','--discriminator_learning_rate', default=0.00005, help ='The discriminator learning rate.', type=int)
 
@@ -45,8 +44,7 @@ a = tf.Print(z, [z], message="This is a: ")
 
 net_g , G_train     = generator_32(z, is_train=True, reuse = False, sig= True, batch_size=args.batchsize)
 
-if args.mini_batch_discimination: 
-    dis = discriminator_batch_discrimination
+
 else: 
     dis = discriminator
 net_d , D_fake      = dis(G_train, output_size, batch_size= args.batchsize, sig = True, is_train = True, reuse = False)
@@ -63,9 +61,6 @@ g_loss = -tf.reduce_mean(tf.log(D_fake))
 g_vars = net_g.all_params   
 d_vars = net_d.all_params  
 
-if args.mini_batch_discimination: 
-    W_var = [var for var in tf.trainable_variables() if var.name =='w_var:0']
-    d_vars += W_var
 
 
 g_vars = tl.layers.get_variables_with_name('gen', True, True)   
