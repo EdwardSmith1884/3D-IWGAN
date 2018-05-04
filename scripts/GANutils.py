@@ -205,7 +205,7 @@ def render_graphs(save_dir,epoch, track_d_loss_iter, track_d_loss, track_recon_l
             plt.savefig(save_dir+'/plots/recon_' + str(epoch)+'.png' )
             plt.clf()
     if len(track_d_loss)> 51: 
-        smoothed_d_loss = savitzky_golay(track_d_loss, 301, 3)
+        smoothed_d_loss = savitzky_golay(track_d_loss, 51, 3)
         plt.plot(track_d_loss_iter, track_d_loss)
         plt.plot(track_d_loss_iter, smoothed_d_loss, color = 'red')
         plt.savefig(save_dir+'/plots/' + str(epoch)+'.png' )
