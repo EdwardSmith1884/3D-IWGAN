@@ -22,3 +22,5 @@ Comparison of 3D-IWGAN's generation ability compared to that of 3D-GAN's.
 
 # Reference:
 please cite my paper if you use this repo for research https://arxiv.org/abs/1707.09557
+# New Work: 
+Please check out my new paper's repo [here](https://github.com/EdwardSmith1884/Multi-View-Silhouette-and-Depth-Decomposition-for-High-Resolution-3D-Object-Representation) if you have an interest in 3D generation and reconstruction. 
