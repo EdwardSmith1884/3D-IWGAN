@@ -58,7 +58,7 @@ def voxel2obj(filename, pred, threshold=.3):
     write_obj(filename, verts, faces)
 
 
-if len(sys.argv) <1:
+if len(sys.argv) < 2:
     print('you need to specify what set of voxels to use')
 models = np.load(sys.argv[1])
 print models.shape
