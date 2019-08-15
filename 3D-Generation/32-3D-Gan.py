@@ -43,10 +43,8 @@ a = tf.Print(z, [z], message="This is a: ")
 ########## network computations #######################
 
 net_g , G_train     = generator_32(z, is_train=True, reuse = False, sig= True, batch_size=args.batchsize)
+dis = discriminator
 
-
-else: 
-    dis = discriminator
 net_d , D_fake      = dis(G_train, output_size, batch_size= args.batchsize, sig = True, is_train = True, reuse = False)
 net_d2, D_legit     = dis(real_models,  output_size, batch_size= args.batchsize, sig = True, is_train= True, reuse = True)
 net_d2, D_eval      = dis(real_models,  output_size, batch_size= args.batchsize, sig = True, is_train= False, reuse = True) # this is for desciding weather to train the discriminator
